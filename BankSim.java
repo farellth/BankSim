@@ -10,10 +10,11 @@
 //
 
 import java.util.List;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -24,10 +25,12 @@ class BankSim {
 	static List<Object> mbrList = new ArrayList<Object>();
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		int continueSearch = 1;
-		int input;
+		int input = 1;
 		String version = "0.1";
-		 
-		Scanner scan = new Scanner(System.in);
+		String inputString = "";
+
+		//Scanner scan = new Scanner(System.in); 
+		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		ToolKit tool = new ToolKit();
 		
 		loadMembers();
@@ -37,17 +40,19 @@ class BankSim {
 			testMbr = (Member)mbrList.get(i);
 			System.out.println(testMbr.accessNbr + " " + testMbr.firstName + " " + testMbr.lastName);
 		}
-		//End Test
+		// End Test
 		System.out.println(mbrList);
 		System.out.println("Welcome to BankSim version " + version + ".\n");
 		while(continueSearch == 1) {
 			System.out.println("Enter 1 to search for an existing member.");
 			System.out.println("Enter 2 to create a new membership.");
 			System.out.println("Enter 3 to quit.");
-			input = scan.nextInt();
+			inputString = scan.readLine();
+			input = Integer.parseInt(inputString);
 			if(input == 1) {
 				System.out.println("Enter an access number to search:");
-				input = scan.nextInt();
+				inputString = scan.readLine();
+				input = Integer.parseInt(inputString);
 				for(int i = 0; i < mbrList.size(); ++i) {
 					Member currentMbr = new Member();
 					currentMbr = (Member)mbrList.get(i);
@@ -57,6 +62,7 @@ class BankSim {
 					}
 					else {
 						currentMbr.mainRecord();
+						break;
 					}
 				}
 			}
@@ -65,27 +71,26 @@ class BankSim {
 				Member currentMbr = new Member();
 				currentMbr.accessNbr = tool.generateAccessNbr();
 				System.out.println("Enter the first name:");
-				scan.nextLine();
-				currentMbr.firstName = scan.nextLine();
+				scan.readLine();
+				currentMbr.firstName = scan.readLine();
 				System.out.println("Enter the last name:");
-				currentMbr.lastName = scan.nextLine();
+				currentMbr.lastName = scan.readLine();
 				System.out.println("Enter the date of birth in DD/MM/YY format:");
-				currentMbr.dateOfBirth = scan.nextLine();
+				currentMbr.dateOfBirth = scan.readLine();
 				System.out.println("Enter the social security number in ###-##-#### format:");
-				currentMbr.socSecNbr = scan.nextLine();
+				currentMbr.socSecNbr = scan.readLine();
 				System.out.println("Enter the phone number in ###-###-#### format:");
-				currentMbr.phoneNbr = scan.nextLine();
+				currentMbr.phoneNbr = scan.readLine();
 				System.out.println("Enter the email address:");
-				currentMbr.emailAddress = scan.nextLine();
+				currentMbr.emailAddress = scan.readLine();
 				System.out.println("Enter the house number and street:");
-				currentMbr.street = scan.nextLine();
+				currentMbr.street = scan.readLine();
 				System.out.println("Enter the city:");
-				currentMbr.city = scan.nextLine();
+				currentMbr.city = scan.readLine();
 				System.out.println("Enter the state abbreviation:");
-				currentMbr.state = scan.nextLine();
+				currentMbr.state = scan.readLine();
 				System.out.println("Enter the zip code:");
-				currentMbr.zipCode = scan.nextLine();
-				//currentMbr.createAcct(1);
+				currentMbr.zipCode = scan.readLine();
 				currentMbr.mainRecord();
 			}
 			else if(input == 3) {
@@ -97,7 +102,6 @@ class BankSim {
 		}
 		System.out.println(mbrList);
 		saveMembers();
-		scan.close();
 	}
 	public static void loadMembers() throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream("members.txt");

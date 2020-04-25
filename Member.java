@@ -6,9 +6,11 @@
 // Created in 2020 by Robert Thompson
 //
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -25,6 +27,7 @@ public class Member implements Serializable {
 	int continueSearch;
 	int input;
 	int accessNbr;
+	String inputString = "";
 	String dateOfBirth = "";
 	String socSecNbr = "";
 	String firstName = "";
@@ -39,10 +42,14 @@ public class Member implements Serializable {
 	static List<Object> allAcctList = new ArrayList<Object>();
 	static List<Object> acctList = new ArrayList<Object>();
 	
-	transient Scanner scan = new Scanner(System.in);
+	//transient Scanner scan = new Scanner(System.in);
+	//BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 	transient ToolKit tool = new ToolKit();
 	
 	public void mainRecord() throws IOException, ClassNotFoundException {
+		//Scanner scan = new Scanner(System.in);
+		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
+		
 		loadAccounts();
 		loadMemberAccounts();
 		if (acctList.size() == 0) {
@@ -69,7 +76,9 @@ public class Member implements Serializable {
 			System.out.println("Enter 3 to perform a transaction.");
 			System.out.println("Enter 4 to create a new account.");
 			System.out.println("Enter 5 to return to member lookup.");
-			input = scan.nextInt();
+			
+			inputString = scan.readLine();
+			input = Integer.parseInt(inputString);
 			if(input == 1) {
 				mbrDetails();
 			}
@@ -81,17 +90,20 @@ public class Member implements Serializable {
 				System.out.println("Enter 2 to perform a withdrawal.");
 				System.out.println("Enter 3 to perform a transfer.");
 				System.out.println("Enter 4 to cancel.");
-				input = scan.nextInt();
+				inputString = scan.readLine();
+				input = Integer.parseInt(inputString);
 				if(input == 1) {
 					System.out.println("Select an account to add funds to:");
 					for(int i = 0; i < acctList.size(); ++i) {
 						currentAcct = (Account)acctList.get(i);
 						System.out.println(i + " " + currentAcct.acctNbr + "   " + currentAcct.bal);
 						}
-					input = scan.nextInt();
+					inputString = scan.readLine();
+					input = Integer.parseInt(inputString);
 					currentAcct = (Account)acctList.get(input);
 					System.out.println("Enter an amount to add:");
-					amtInput = scan.nextFloat();
+					inputString = scan.readLine();
+					amtInput = Float.parseFloat(inputString);
 					currentAcct.deposit(amtInput);
 					System.out.println("The new balance of account " + currentAcct.acctNbr + " is " + currentAcct.bal + ".");
 				}
@@ -101,10 +113,12 @@ public class Member implements Serializable {
 						currentAcct = (Account)acctList.get(i);
 						System.out.println(i + " " + currentAcct.acctNbr + "   " + currentAcct.bal);
 						}
-					input = scan.nextInt();
+					inputString = scan.readLine();
+					input = Integer.parseInt(inputString);
 					currentAcct = (Account)acctList.get(input);
 					System.out.println("Enter an amount to remove:");
-					amtInput = scan.nextFloat();
+					inputString = scan.readLine();
+					amtInput = Float.parseFloat(inputString);
 					currentAcct.withdrawal(amtInput);
 					System.out.println("The new balance of account " + currentAcct.acctNbr + " is " + currentAcct.bal + ".");
 				}
@@ -116,17 +130,20 @@ public class Member implements Serializable {
 						currentAcct = (Account)acctList.get(i);
 						System.out.println(i + " " + currentAcct.acctNbr + "   " + currentAcct.bal);
 						}
-					input = scan.nextInt();
+					inputString = scan.readLine();
+					input = Integer.parseInt(inputString);
 					currentAcct = (Account)acctList.get(input);
 					System.out.println("Select an account to add funds to:");
 					for(int i = 0; i < acctList.size(); ++i) {
 						recAcct = (Account)acctList.get(i);
 						System.out.println(i + " " + recAcct.acctNbr + "   " + recAcct.bal);
 						}
-					input = scan.nextInt();
+					inputString = scan.readLine();
+					input = Integer.parseInt(inputString);
 					recAcct = (Account)acctList.get(input);
 					System.out.println("Enter an amount to transfer:");
-					amtInput = scan.nextFloat();
+					inputString = scan.readLine();
+					amtInput = Float.parseFloat(inputString);
 					currentAcct.withdrawal(amtInput);
 					recAcct.deposit(amtInput);
 					System.out.println("The new balance of account " + currentAcct.acctNbr + " is " + currentAcct.bal + ".");
@@ -137,7 +154,8 @@ public class Member implements Serializable {
 				System.out.println("Create account");
 				System.out.println("Enter 1 for a savings account.");
 				System.out.println("Enter 2 for a checking account.");
-				input = scan.nextInt();
+				inputString = scan.readLine();
+				input = Integer.parseInt(inputString);
 				createAcct(input);
 			}
 			else if(input == 5) {
