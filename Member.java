@@ -23,7 +23,8 @@ public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 	float amtInput;
 	int continueSearch;
-	int input, accessNbr;
+	int input;
+	int accessNbr;
 	String dateOfBirth = "";
 	String socSecNbr = "";
 	String firstName = "";
@@ -34,13 +35,21 @@ public class Member implements Serializable {
 	String state = "";
 	String emailAddress = "";
 	String zipCode = "";
-	
+
+	static List<Object> allAcctList = new ArrayList<Object>();
 	static List<Object> acctList = new ArrayList<Object>();
 	
 	transient Scanner scan = new Scanner(System.in);
 	transient ToolKit tool = new ToolKit();
 	
-	public void mainRecord() {
+	public void mainRecord() throws IOException, ClassNotFoundException {
+		loadAccounts();
+		loadMemberAccounts();
+		if (acctList.size() == 0) {
+			createAcct(1);
+		}
+		System.out.println(allAcctList);
+		System.out.println(acctList);
 		continueSearch = 1;
 		while(continueSearch == 1) {
 			System.out.println("Member Record");
@@ -134,6 +143,7 @@ public class Member implements Serializable {
 			else if(input == 5) {
 				continueSearch = 0;
 				BankSim.mbrList.add(this);
+				saveAccounts();
 			}
 			else {
 				System.out.println("Invalid");
@@ -166,19 +176,34 @@ public class Member implements Serializable {
 			currentAcct.rate = (float)0.05;
 		}
 		acctList.add(currentAcct);
+		allAcctList.add(currentAcct);
 		System.out.println(currentAcct.acctNbr + "   " + currentAcct.bal);
 	}
 	public static void loadAccounts() throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream("accounts.txt");
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		List<Object> read = (List<Object>)ois.readObject();
-		acctList = read;
+		allAcctList = read;
 		ois.close();
 	}
-	public void saveAccounts() throws IOException {
+	public void loadMemberAccounts() {
+		for(int i = 0; i < allAcctList.size(); ++i) {
+			Account copyAccount = new Account();
+			copyAccount = (Account)allAcctList.get(i);
+			if(accessNbr == copyAccount.accessNbr) {
+				acctList.add(copyAccount);
+			}
+		}
+	}
+	public static void saveAccounts() throws IOException {
 		FileOutputStream fos = new FileOutputStream("accounts.txt");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(acctList);
+		oos.writeObject(allAcctList);
 		oos.close();
+		for(int i = 0; i < allAcctList.size(); ++i) {
+			Account currentAcct = new Account();
+			currentAcct = (Account)allAcctList.get(i);
+			System.out.println(currentAcct.acctNbr + "   " + currentAcct.bal);
+		}
 	}
 }

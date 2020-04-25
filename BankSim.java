@@ -48,6 +48,17 @@ class BankSim {
 			if(input == 1) {
 				System.out.println("Enter an access number to search:");
 				input = scan.nextInt();
+				for(int i = 0; i < mbrList.size(); ++i) {
+					Member currentMbr = new Member();
+					currentMbr = (Member)mbrList.get(i);
+					if(input != currentMbr.accessNbr) {
+						System.out.println("Member not found");
+						continue;
+					}
+					else {
+						currentMbr.mainRecord();
+					}
+				}
 			}
 			else if(input == 2) {
 				System.out.println("Create");
@@ -74,7 +85,7 @@ class BankSim {
 				currentMbr.state = scan.nextLine();
 				System.out.println("Enter the zip code:");
 				currentMbr.zipCode = scan.nextLine();
-				currentMbr.createAcct(1);
+				//currentMbr.createAcct(1);
 				currentMbr.mainRecord();
 			}
 			else if(input == 3) {
@@ -98,7 +109,7 @@ class BankSim {
 	public static void saveMembers() throws IOException {
 		FileOutputStream fos = new FileOutputStream("members.txt");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(mbrList);
+		oos.writeObject(mbrList); 
 		oos.close();
 	}
 }
