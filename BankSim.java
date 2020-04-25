@@ -11,6 +11,7 @@
 
 import java.util.List;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,12 +29,15 @@ class BankSim {
 		 
 		Scanner scan = new Scanner(System.in);
 		ToolKit tool = new ToolKit();
-				
-		FileInputStream fis = new FileInputStream("members.tmp");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		List<Object> read = (List<Object>)ois.readObject();
-		mbrList = read;
-		ois.close();
+		
+		loadMembers();
+		// Test		
+		for(int i = 0; i < mbrList.size(); ++i) {
+			Member testMbr = new Member();
+			testMbr = (Member)mbrList.get(i);
+			System.out.println(testMbr.accessNbr + " " + testMbr.firstName + " " + testMbr.lastName);
+		}
+		//End Test
 		System.out.println(mbrList);
 		System.out.println("Welcome to BankSim version " + version + ".\n");
 		while(continueSearch == 1) {
@@ -84,8 +88,15 @@ class BankSim {
 		saveMembers();
 		scan.close();
 	}
+	public static void loadMembers() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream("members.txt");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		List<Object> read = (List<Object>)ois.readObject();
+		mbrList = read;
+		ois.close();
+	}
 	public static void saveMembers() throws IOException {
-		FileOutputStream fos = new FileOutputStream("members.tmp");
+		FileOutputStream fos = new FileOutputStream("members.txt");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(mbrList);
 		oos.close();

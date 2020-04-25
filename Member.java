@@ -6,8 +6,10 @@
 // Created in 2020 by Robert Thompson
 //
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +17,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Member implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	float amtInput;
 	int continueSearch;
 	int input, accessNbr;
@@ -29,10 +35,10 @@ public class Member implements Serializable {
 	String emailAddress = "";
 	String zipCode = "";
 	
-	List<Object> acctList = new ArrayList<Object>();
+	static List<Object> acctList = new ArrayList<Object>();
 	
-	Scanner scan = new Scanner(System.in);
-	ToolKit tool = new ToolKit();
+	transient Scanner scan = new Scanner(System.in);
+	transient ToolKit tool = new ToolKit();
 	
 	public void mainRecord() {
 		continueSearch = 1;
@@ -161,6 +167,13 @@ public class Member implements Serializable {
 		}
 		acctList.add(currentAcct);
 		System.out.println(currentAcct.acctNbr + "   " + currentAcct.bal);
+	}
+	public static void loadAccounts() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream("accounts.txt");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		List<Object> read = (List<Object>)ois.readObject();
+		acctList = read;
+		ois.close();
 	}
 	public void saveAccounts() throws IOException {
 		FileOutputStream fos = new FileOutputStream("accounts.txt");
