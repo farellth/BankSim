@@ -21,7 +21,7 @@ public class ToolKit {
 		Random r = new Random();
 		
 		accessNbr = r.nextInt((9999999 - 1000000) + 1000000) + 1000000;
-		
+		System.out.println(accessNbr);
 		return accessNbr;
 	}
 	public int generateAcctNbr() {
@@ -29,7 +29,8 @@ public class ToolKit {
 		Random r = new Random();
 		
 		acctNbr = r.nextInt((99999999 - 10000000) + 10000000) + 10000000;
-
+		System.out.println("Account Number");
+		System.out.println(acctNbr);
 		return acctNbr;
 	}
 }

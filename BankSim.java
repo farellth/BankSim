@@ -11,6 +11,7 @@
 
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 class BankSim {
 	
@@ -71,7 +71,6 @@ class BankSim {
 				Member currentMbr = new Member();
 				currentMbr.accessNbr = tool.generateAccessNbr();
 				System.out.println("Enter the first name:");
-				scan.readLine();
 				currentMbr.firstName = scan.readLine();
 				System.out.println("Enter the last name:");
 				currentMbr.lastName = scan.readLine();
@@ -91,6 +90,7 @@ class BankSim {
 				currentMbr.state = scan.readLine();
 				System.out.println("Enter the zip code:");
 				currentMbr.zipCode = scan.readLine();
+				mbrList.add(currentMbr);
 				currentMbr.mainRecord();
 			}
 			else if(input == 3) {
@@ -100,18 +100,20 @@ class BankSim {
 				System.out.println("Invalid");
 			}
 		}
-		System.out.println(mbrList);
 		saveMembers();
 	}
 	public static void loadMembers() throws IOException, ClassNotFoundException {
-		FileInputStream fis = new FileInputStream("members.txt");
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		List<Object> read = (List<Object>)ois.readObject();
-		mbrList = read;
-		ois.close();
+		File f = new File("members.txt");
+		if(f.isFile()) {
+			FileInputStream fis = new FileInputStream("members.txt");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			List<Object> read = (List<Object>)ois.readObject();
+			mbrList = read;
+			ois.close();
+		}
 	}
 	public static void saveMembers() throws IOException {
-		FileOutputStream fos = new FileOutputStream("members.txt");
+		FileOutputStream fos = new FileOutputStream("members.txt", false);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(mbrList); 
 		oos.close();
