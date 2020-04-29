@@ -25,7 +25,7 @@ public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 	float amtInput;
 	int delMbr = 0;
-	int continueSearch;
+	int viewMbr;
 	int input;
 	int accessNbr;
 	String inputString = "";
@@ -53,14 +53,13 @@ public class Member implements Serializable {
 		}
 		System.out.println(allAcctList);
 		System.out.println(acctList);
-		continueSearch = 1;
-		while(continueSearch == 1) {
-			System.out.println(BankSim.mbrList);
+		viewMbr = 1;
+		while(viewMbr == 1) {
 			
 			// Prints basic member info
 			System.out.println("Member Record");
-			System.out.println("Access Number: " + accessNbr);
-			System.out.println("Name: " + firstName + " " + lastName);
+			System.out.println("Access Number:	" + accessNbr);
+			System.out.println("Name:		" + firstName + " " + lastName);
 			System.out.println("");
 			System.out.println("Account List:");
 			System.out.println("");
@@ -98,8 +97,11 @@ public class Member implements Serializable {
 				}
 				inputString = scan.readLine();
 				input = Integer.parseInt(inputString);
+				System.out.println("Debug");
 				currentAcct = (Account)acctList.get((input-1));
+				System.out.println(currentAcct.bal);
 				currentAcct.acctDetails();
+				System.out.println("Debug");
 				if(currentAcct.delAcct == 1) {
 					acctList.remove(currentAcct);
 					allAcctList.remove(currentAcct);
@@ -234,7 +236,7 @@ public class Member implements Serializable {
 		input = Integer.parseInt(inputString);
 		
 		// Modify info
-		//while(continueSearch == 1) {
+		//while(viewMbr == 1) {
 			if(input == 1) {
 				int retry = 1;
 				while(retry == 1) {
@@ -245,7 +247,9 @@ public class Member implements Serializable {
 			// Delete member
 			else if(input == 2) {
 				deleteMbr();
-				returnToMain();
+				if(delMbr == 1) {
+					returnToMain();
+				}
 				
 			// Return to main record
 			}
@@ -258,7 +262,7 @@ public class Member implements Serializable {
 				System.out.println("Invalid");
 			}
 		//}
-		//continueSearch = 1;
+		//viewMbr = 1;
 	}
 	
 	// Makes changes to member info
@@ -366,7 +370,7 @@ public class Member implements Serializable {
 	
 	// Returns to the main menu
 	public void returnToMain() throws IOException {
-		continueSearch = 0;
+		viewMbr = 0;
 		saveAccounts();
 		acctList.clear();
 	}
@@ -400,10 +404,5 @@ public class Member implements Serializable {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(allAcctList);
 		oos.close();
-		for(int i = 0; i < allAcctList.size(); ++i) {
-			Account currentAcct = new Account();
-			currentAcct = (Account)allAcctList.get(i);
-			System.out.println(currentAcct.acctNbr + "   $" + currentAcct.bal + " for access # " + currentAcct.accessNbr);
-		}
 	}
 }

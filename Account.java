@@ -29,37 +29,42 @@ public class Account implements Serializable {
 	BigDecimal transfer;
 	
 	public void acctDetails() throws IOException {
+		int viewAcct = 1;
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Account Details");
-		System.out.println("Account Number:   " + acctNbr);
-		System.out.println("Account Type:     " + acctType);
-		System.out.println("Interest Rate:    " + rate + "%");
-		System.out.println("Balance:          $" + bal);
-		System.out.println("");
 		
-		// Account details menu
-		System.out.println("Enter 1 to delete this account.");
-		System.out.println("Enter 2 to return to the main member record.");
-		inputString = scan.readLine();
-		input = Integer.parseInt(inputString);
-		if(input == 1) {
-			if(bal != 0) {
-				System.out.println("Account has a balance. Clear the balance and try again.");
+		while(viewAcct == 1) {
+			System.out.println("Account Details");
+			System.out.println("Account Number:   " + acctNbr);
+			System.out.println("Account Type:     " + acctType);
+			System.out.println("Interest Rate:    " + rate + "%");
+			System.out.println("Balance:          $" + bal);
+			System.out.println("");
+			
+			// Account details menu
+			System.out.println("Enter 1 to delete this account.");
+			System.out.println("Enter 2 to return to the main member record.");
+			inputString = scan.readLine();
+			input = Integer.parseInt(inputString);
+			if(input == 1) {
+				deleteAcct();
+				viewAcct = 0;
+			}
+			else if(input == 2) {
+				viewAcct = 0;
 			}
 			else {
-				System.out.println("Account is empty, deleting account...");
-				delAcct = 1;
+				System.out.println("Invalid");
 			}
 		}
-		else if(input == 2) {
-			
+	}
+	public void deleteAcct() {
+		if(bal != 0) {
+			System.out.println("Account has a balance. Clear the balance and try again.");
 		}
 		else {
-			System.out.println("Invalid");
+			System.out.println("Account is empty, deleting account...");
+			delAcct = 1;
 		}
-	}
-	public void deleteAcct(float amount) {
-		System.out.println("Delete Account");
 	}
 	public void deposit(float amount) {
 		System.out.println("Deposit");

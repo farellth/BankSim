@@ -24,15 +24,15 @@ class BankSim {
 	
 	static List<Object> mbrList = new ArrayList<Object>();
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
-		int continueSearch = 1;
+		int keepSearch = 1;
 		int input = 1;
-		String version = "0.1";
 		String inputString = "";
 
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		ToolKit tool = new ToolKit();
 		
 		loadMembers();
+		
 		// Test		
 		for(int i = 0; i < mbrList.size(); ++i) {
 			Member testMbr = new Member();
@@ -40,9 +40,8 @@ class BankSim {
 			System.out.println(testMbr.accessNbr + " " + testMbr.firstName + " " + testMbr.lastName);
 		}
 		// End Test
-		System.out.println(mbrList);
-		System.out.println("Welcome to BankSim version " + version + ".\n");
-		while(continueSearch == 1) {
+		
+		while(keepSearch == 1) {
 			
 			// Main menu
 			System.out.println("Enter 1 to search for an existing member.");
@@ -100,6 +99,7 @@ class BankSim {
 				currentMbr.zipCode = scan.readLine();
 				mbrList.add(currentMbr);
 				currentMbr.mainRecord();
+				
 				//Check if member should be deleted
 				if(currentMbr.delMbr == 1) {
 					mbrList.remove(currentMbr);
@@ -108,7 +108,7 @@ class BankSim {
 			
 			// Quit
 			else if(input == 3) {
-				continueSearch = 0;				
+				keepSearch = 0;				
 			}
 			
 			// Invalid input
@@ -123,6 +123,7 @@ class BankSim {
 	// Load member list from file
 	public static void loadMembers() throws IOException, ClassNotFoundException {
 		File f = new File("members.txt");
+		
 		// Checks if file exists
 		if(f.isFile()) {
 			FileInputStream fis = new FileInputStream("members.txt");
@@ -163,11 +164,7 @@ class BankSim {
 				cleanMbr = (Member)mbrList.get(x);
 				if(cleanAcct.accessNbr == cleanMbr.accessNbr) {
 					doesAccessMatch = 1;
-					System.out.println("Account # " + cleanAcct.acctNbr + " belongs to access # " + cleanMbr.accessNbr);
 					break;
-				}
-				else if(doesAccessMatch == 0  && x == mbrList.size() - 1) {
-					System.out.println("Account # " + cleanAcct.acctNbr + " will be deleted.");
 				}
 			}
 			if(doesAccessMatch == 0) {
@@ -180,10 +177,5 @@ class BankSim {
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(allAcctList);
 		oos.close();
-		for(int i = 0; i < allAcctList.size(); ++i) {
-			Account currentAcct = new Account();
-			currentAcct = (Account)allAcctList.get(i);
-			System.out.println(currentAcct.acctNbr + "   $" + currentAcct.bal + " for access # " + currentAcct.accessNbr);
-		}
 	}
 }
