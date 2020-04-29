@@ -10,12 +10,6 @@
 import java.util.Random;
 
 public class ToolKit {
-	public void createMbr(int accessNbr) {
-
-	}
-	public void createAcct(int acctType, int accessNbr) {
-		
-	}
 	public int generateAccessNbr() {
 		int accessNbr;
 		Random r = new Random();
