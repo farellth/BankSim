@@ -100,6 +100,10 @@ public class Member implements Serializable {
 				input = Integer.parseInt(inputString);
 				currentAcct = (Account)acctList.get((input-1));
 				currentAcct.acctDetails();
+				if(currentAcct.delAcct == 1) {
+					acctList.remove(currentAcct);
+					allAcctList.remove(currentAcct);
+				}
 			}
 			
 			// Transactions
@@ -221,11 +225,11 @@ public class Member implements Serializable {
 		System.out.println("				" + city + "," + state);
 		System.out.println("				" + zipCode);
 		System.out.println("");
+		
+		// Member details menu
 		System.out.println("Enter 1 to modify the member's information.");
 		System.out.println("Enter 2 to delete the member record.");
 		System.out.println("Enter 3 to return the main member record.");
-		
-		// Member details prompt
 		inputString = scan.readLine();
 		input = Integer.parseInt(inputString);
 		

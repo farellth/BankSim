@@ -7,6 +7,9 @@
 // Created in March 2020 by Robert Thompson
 //
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -19,16 +22,41 @@ public class Account implements Serializable {
 	float checkingRate = (float)0.05;
 	float rate;
 	float bal = 0;
-	int accessNbr, acctNbr;
+	int accessNbr, acctNbr, input;
+	int delAcct = 0;
 	String acctType = "";
+	String inputString = "";
 	BigDecimal transfer;
 	
-	public void acctDetails() {
+	public void acctDetails() throws IOException {
+		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Account Details");
 		System.out.println("Account Number:   " + acctNbr);
 		System.out.println("Account Type:     " + acctType);
 		System.out.println("Interest Rate:    " + rate + "%");
 		System.out.println("Balance:          $" + bal);
+		System.out.println("");
+		
+		// Account details menu
+		System.out.println("Enter 1 to delete this account.");
+		System.out.println("Enter 2 to return to the main member record.");
+		inputString = scan.readLine();
+		input = Integer.parseInt(inputString);
+		if(input == 1) {
+			if(bal != 0) {
+				System.out.println("Account has a balance. Clear the balance and try again.");
+			}
+			else {
+				System.out.println("Account is empty, deleting account...");
+				delAcct = 1;
+			}
+		}
+		else if(input == 2) {
+			
+		}
+		else {
+			System.out.println("Invalid");
+		}
 	}
 	public void deleteAcct(float amount) {
 		System.out.println("Delete Account");
