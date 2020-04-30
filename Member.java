@@ -51,8 +51,6 @@ public class Member implements Serializable {
 		if (acctList.size() == 0) {
 			createAcct(1);
 		}
-		System.out.println(allAcctList);
-		System.out.println(acctList);
 		viewMbr = 1;
 		while(viewMbr == 1) {
 			int prompt = 1;
@@ -73,7 +71,7 @@ public class Member implements Serializable {
 				for(int i = 0; i < acctList.size(); ++i) {
 					currentAcct = (Account)acctList.get(i);
 					//if(currentAcct.rate == currentAcct.checkingRate) {
-						System.out.println(currentAcct.acctNbr + "   $" + currentAcct.bal + " ");
+						System.out.printf(currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
 					//}
 				}
 				
@@ -105,7 +103,7 @@ public class Member implements Serializable {
 					System.out.println("Select an account to view its details:");
 					for(int i = 0; i < acctList.size(); ++i) {
 						currentAcct = (Account)acctList.get(i);
-						System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+						System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
 					}
 					inputString = scan.readLine();
 					try {
@@ -150,7 +148,7 @@ public class Member implements Serializable {
 						System.out.println("Select an account to add funds to:");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
-							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
 						}
 						inputString = scan.readLine();
 						try {
@@ -170,7 +168,7 @@ public class Member implements Serializable {
 							inputString = scan.readLine();
 							amtInput = Float.parseFloat(inputString);
 							currentAcct.deposit(amtInput);
-							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+							System.out.printf("The new balance of account " + currentAcct.acctNbr + " is $" + "%,.2f" + ".\n", currentAcct.bal);
 							prompt = 0;
 						} catch(NumberFormatException e) {
 							System.out.println("Invalid input");
@@ -185,7 +183,7 @@ public class Member implements Serializable {
 						System.out.println("Select an account to remove funds from:");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
-							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
 						}
 						inputString = scan.readLine();
 						try {
@@ -205,7 +203,7 @@ public class Member implements Serializable {
 						try {
 							amtInput = Float.parseFloat(inputString);
 							currentAcct.withdrawal(amtInput);
-							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+							System.out.printf("The new balance of account " + currentAcct.acctNbr + " is $" + "%,.2f" + ".\n", currentAcct.bal);
 							prompt = 0;
 						} catch(NumberFormatException e) {
 							System.out.println("Invalid input");
@@ -224,7 +222,7 @@ public class Member implements Serializable {
 						System.out.println("Select an account to remove funds from:");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
-							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
 						}
 						inputString = scan.readLine();
 						try {
@@ -242,7 +240,7 @@ public class Member implements Serializable {
 						System.out.println("Select an account to add funds to:");
 						for(int i = 0; i < acctList.size(); ++i) {
 							destAcct = (Account)acctList.get(i);
-							System.out.println((i+1) + ". " + destAcct.acctNbr + "   $" + destAcct.bal);
+							System.out.printf((i+1) + ". " + destAcct.acctNbr + "   $" + "%,.2f" + "\n", destAcct.bal);
 						}
 						inputString = scan.readLine();
 						try {
@@ -263,8 +261,8 @@ public class Member implements Serializable {
 							amtInput = Float.parseFloat(inputString);
 							currentAcct.withdrawal(amtInput);
 							destAcct.deposit(amtInput);
-							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
-							System.out.println("The new balance of account " + destAcct.acctNbr + " is $" + destAcct.bal + ".");
+							System.out.printf("The new balance of account " + currentAcct.acctNbr + " is $" + "%,.2f" + ".\n", currentAcct.bal);
+							System.out.printf("The new balance of account " + destAcct.acctNbr + " is $" + "%,.2f" + ".\n", destAcct.bal);
 							prompt = 0;
 						} catch(NumberFormatException e) {
 							System.out.println("Invalid input");

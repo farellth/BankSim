@@ -39,7 +39,7 @@ public class Account implements Serializable {
 				System.out.println("Account Number:   " + acctNbr);
 				System.out.println("Account Type:     " + acctType);
 				System.out.println("Interest Rate:    " + rate + "%");
-				System.out.println("Balance:          $" + bal);
+				System.out.printf("Balance:          $%,.2f", bal + "\n");
 				System.out.println("");
 				
 				// Account details menu
