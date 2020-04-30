@@ -59,6 +59,7 @@ public class Member implements Serializable {
 			
 			// Prints basic member info
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Member Record");
 				System.out.println("Access Number:	" + accessNbr);
 				System.out.println("Name:		" + firstName + " " + lastName);
@@ -68,11 +69,31 @@ public class Member implements Serializable {
 				
 				// Prints member account list
 				
+				// Print checking account list, if any exist
+				int chkExists = 0;
 				for(int i = 0; i < acctList.size(); ++i) {
 					currentAcct = (Account)acctList.get(i);
-					//if(currentAcct.rate == currentAcct.checkingRate) {
+					if(currentAcct.rate == currentAcct.checkingRate) {
+						if(chkExists == 0) {
+							System.out.println("Checking");
+							System.out.println("");
+							chkExists = 1;
+						}
 						System.out.printf(currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
-					//}
+					}
+				}
+				
+				// Print savings account list
+				if(chkExists == 1) {
+					System.out.println("");
+				}
+				System.out.println("Savings");
+				System.out.println("");
+				for(int i = 0; i < acctList.size(); ++i) {
+					currentAcct = (Account)acctList.get(i);
+					if(currentAcct.rate == currentAcct.savingsRate) {
+						System.out.printf(currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
+					}
 				}
 				
 				// Member menu
@@ -100,7 +121,9 @@ public class Member implements Serializable {
 			else if(input == 2) {
 				prompt = 1;
 				while(prompt == 1) {
+					System.out.println("");
 					System.out.println("Select an account to view its details:");
+					System.out.println("");
 					for(int i = 0; i < acctList.size(); ++i) {
 						currentAcct = (Account)acctList.get(i);
 						System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
@@ -108,11 +131,9 @@ public class Member implements Serializable {
 					inputString = scan.readLine();
 					try {
 						input = Integer.parseInt(inputString);
-						System.out.println("Debug");
 						currentAcct = (Account)acctList.get((input-1));
 						System.out.println(currentAcct.bal);
 						currentAcct.acctDetails();
-						System.out.println("Debug");
 						if(currentAcct.delAcct == 1) {
 							acctList.remove(currentAcct);
 							allAcctList.remove(currentAcct);
@@ -128,6 +149,9 @@ public class Member implements Serializable {
 			else if(input == 3) {
 				prompt = 1;
 				while(prompt == 1) {
+					System.out.println("");
+					System.out.println("Select a type of transaction.");
+					System.out.println("");
 					System.out.println("Enter 1 to perform a deposit.");
 					System.out.println("Enter 2 to perform a withdrawal.");
 					System.out.println("Enter 3 to perform a transfer.");
@@ -145,7 +169,9 @@ public class Member implements Serializable {
 				if(input == 1) {
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Select an account to add funds to:");
+						System.out.println("");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
 							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
@@ -163,6 +189,7 @@ public class Member implements Serializable {
 					// Amount to deposit
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Enter an amount to add:");
 						try {
 							inputString = scan.readLine();
@@ -180,7 +207,9 @@ public class Member implements Serializable {
 				else if(input == 2) {
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Select an account to remove funds from:");
+						System.out.println("");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
 							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
@@ -198,6 +227,7 @@ public class Member implements Serializable {
 					// Amount to withdrawal
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Enter an amount to remove:");
 						inputString = scan.readLine();
 						try {
@@ -219,7 +249,9 @@ public class Member implements Serializable {
 					// Originating account
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Select an account to remove funds from:");
+						System.out.println("");
 						for(int i = 0; i < acctList.size(); ++i) {
 							currentAcct = (Account)acctList.get(i);
 							System.out.printf((i+1) + ". " + currentAcct.acctNbr + "   $" + "%,.2f" + "\n", currentAcct.bal);
@@ -237,7 +269,9 @@ public class Member implements Serializable {
 					prompt = 1;
 					while(prompt == 1) {
 						currentAcct = (Account)acctList.get((input-1));
+						System.out.println("");
 						System.out.println("Select an account to add funds to:");
+						System.out.println("");
 						for(int i = 0; i < acctList.size(); ++i) {
 							destAcct = (Account)acctList.get(i);
 							System.out.printf((i+1) + ". " + destAcct.acctNbr + "   $" + "%,.2f" + "\n", destAcct.bal);
@@ -255,6 +289,7 @@ public class Member implements Serializable {
 					// Amount to transfer
 					prompt = 1;
 					while(prompt == 1) {
+						System.out.println("");
 						System.out.println("Enter an amount to transfer:");
 						inputString = scan.readLine();
 						try {
@@ -275,7 +310,9 @@ public class Member implements Serializable {
 			else if(input == 4) {
 				prompt = 1;
 				while(prompt == 1) {
-					System.out.println("Create account");
+					System.out.println("");
+					System.out.println("Select an account type.");
+					System.out.println("");
 					System.out.println("Enter 1 for a savings account.");
 					System.out.println("Enter 2 for a checking account.");
 					inputString = scan.readLine();
@@ -311,6 +348,7 @@ public class Member implements Serializable {
 		
 		while(viewMbrDetails == 1) {
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Member Details");
 				System.out.println("Access Number:			" + accessNbr);
 				System.out.println("Name:          			" + firstName + " " + lastName);
@@ -321,9 +359,9 @@ public class Member implements Serializable {
 				System.out.println("Address:			" + street);
 				System.out.println("				" + city + "," + state);
 				System.out.println("				" + zipCode);
-				System.out.println("");
 				
 				// Member details menu
+				System.out.println("");
 				System.out.println("Enter 1 to modify the member's information.");
 				System.out.println("Enter 2 to delete the member record.");
 				System.out.println("Enter 3 to return the main member record.");
@@ -376,6 +414,7 @@ public class Member implements Serializable {
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		
 		while(prompt == 1) {
+			System.out.println("");
 			System.out.println("Select a field to modify:");
 			System.out.println("1. Name");
 			System.out.println("2. Date of Birth");
@@ -393,39 +432,49 @@ public class Member implements Serializable {
 			}
 		}
 		if(input == 1) {
+			System.out.println("");
 			System.out.println("Enter the first name:");
 			firstName = scan.readLine();
+			System.out.println("");
 			System.out.println("Enter the last name:");
 			lastName = scan.readLine();
 			retry = 0;
 		}
 		else if(input == 2) {
+			System.out.println("");
 			System.out.println("Enter the date of birth in DD/MM/YY format:");
 			dateOfBirth = scan.readLine();
 			retry = 0;
 		}
 		else if(input == 3) {
+			System.out.println("");
 			System.out.println("Enter the phone number in ###-###-#### format:");
 			phoneNbr = scan.readLine();
 			retry = 0;
 		}
 		else if(input == 4) {
+			System.out.println("");
 			System.out.println("Enter the email address:");
 			emailAddress = scan.readLine();
 			retry = 0;
 		}
 		else if(input == 5) {
+			System.out.println("");
 			System.out.println("Enter the social security number in ###-##-#### format:");
 			socSecNbr = scan.readLine();
 			retry = 0;
 		}
 		else if(input == 6) {
+			System.out.println("");
 			System.out.println("Enter the house number and street:");
 			street = scan.readLine();
+			System.out.println("");
 			System.out.println("Enter the city:");
 			city = scan.readLine();
+			System.out.println("");
 			System.out.println("Enter the state abbreviation:");
 			state = scan.readLine();
+			System.out.println("");
 			System.out.println("Enter the zip code:");
 			zipCode = scan.readLine();
 			retry = 0;
@@ -434,6 +483,7 @@ public class Member implements Serializable {
 			retry = 0;
 		}
 		else {
+			System.out.println("");
 			System.out.println("Invalid choice");
 		}
 		return retry;
@@ -443,7 +493,6 @@ public class Member implements Serializable {
 	public void deleteMbr() {
 		int acctsAreEmpty = 1;
 		Account currentAcct = new Account();
-		System.out.println("Delete member record");
 		
 		// Checks all member accounts for a balance
 		for(int i = 0; i < acctList.size(); ++i) {
@@ -453,9 +502,11 @@ public class Member implements Serializable {
 			}
 		}
 		if(acctsAreEmpty == 0) {
+			System.out.println("");
 			System.out.println("At least one account has a balance. Clear the balance(s) and try again.");
 		}
 		else {
+			System.out.println("");
 			System.out.println("All accounts are empty, deleting member record...");
 			delMbr = 1;
 		}
@@ -465,7 +516,6 @@ public class Member implements Serializable {
 	public void createAcct(int acctType) {
 		ToolKit tool = new ToolKit();
 		Account currentAcct = new Account();
-		System.out.println("Debug");
 		currentAcct.acctNbr = tool.generateAcctNbr();
 		currentAcct.accessNbr = accessNbr;
 		if(acctType == 1) {
@@ -478,7 +528,6 @@ public class Member implements Serializable {
 		}
 		acctList.add(currentAcct);
 		allAcctList.add(currentAcct);
-		System.out.println(currentAcct.acctNbr + "   " + currentAcct.bal);
 		tool = null;
 	}
 	

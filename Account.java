@@ -35,14 +35,15 @@ public class Account implements Serializable {
 		
 		while(viewAcct == 1) {
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Account Details");
 				System.out.println("Account Number:   " + acctNbr);
 				System.out.println("Account Type:     " + acctType);
 				System.out.println("Interest Rate:    " + rate + "%");
-				System.out.printf("Balance:          $%,.2f", bal + "\n");
-				System.out.println("");
+				System.out.printf("Balance:          $%,.2f" + "\n", bal);
 				
 				// Account details menu
+				System.out.println("");
 				System.out.println("Enter 1 to delete this account.");
 				System.out.println("Enter 2 to return to the main member record.");
 				inputString = scan.readLine();
@@ -67,21 +68,21 @@ public class Account implements Serializable {
 	}
 	public void deleteAcct() {
 		if(bal != 0) {
+			System.out.println("");
 			System.out.println("Account has a balance. Clear the balance and try again.");
 		}
 		else {
+			System.out.println("");
 			System.out.println("Account is empty, deleting account...");
 			delAcct = 1;
 		}
 	}
 	public void deposit(float amount) {
-		System.out.println("Deposit");
 		bal += amount;
 		transfer = round(bal,2);
 		bal = transfer.floatValue();
 	}
 	public void withdrawal(float amount) {
-		System.out.println("Withdrawal");
 		bal -= amount;
 		transfer = round(bal,2);
 		bal = transfer.floatValue();

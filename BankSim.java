@@ -38,6 +38,7 @@ class BankSim {
 						
 			// Main menu
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter 1 to search for an existing member.");
 				System.out.println("Enter 2 to create a new membership.");
 				System.out.println("Enter 3 to quit.");
@@ -56,7 +57,9 @@ class BankSim {
 			
 			// Create new Member
 			else if(input == 2) {
-				System.out.println("Create");
+				System.out.println("");
+				System.out.println("Membership Application");
+				System.out.println("");
 				Member currentMbr = new Member();
 				currentMbr.accessNbr = tool.generateAccessNbr();
 				System.out.println("Enter the first name:");
@@ -111,6 +114,7 @@ class BankSim {
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		
 		while(prompt == 1) {
+			System.out.println("");
 			System.out.println("Select a search method:");
 			System.out.println("1. Access Number");
 			System.out.println("2. Name");
@@ -130,6 +134,7 @@ class BankSim {
 		if(mbrSearchInput == 1) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter an access number to search.");
 				mbrSearchInputString = scan.readLine();
 				try {
@@ -159,6 +164,7 @@ class BankSim {
 		else if(mbrSearchInput == 2) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter a first and last name to search.");
 				mbrSearchInputString = scan.readLine();
 				for(int i = 0; i < mbrList.size(); ++i) {
@@ -182,6 +188,7 @@ class BankSim {
 		else if(mbrSearchInput == 3) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter a date of birth to search.");
 				mbrSearchInputString = scan.readLine();
 				for(int i = 0; i < mbrList.size(); ++i) {
@@ -205,6 +212,7 @@ class BankSim {
 		else if(mbrSearchInput == 4) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter a phone number to search.");
 				mbrSearchInputString = scan.readLine();
 				for(int i = 0; i < mbrList.size(); ++i) {
@@ -228,6 +236,7 @@ class BankSim {
 		else if(mbrSearchInput == 5) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter an email address to search.");
 				mbrSearchInputString = scan.readLine();
 				for(int i = 0; i < mbrList.size(); ++i) {
@@ -251,6 +260,7 @@ class BankSim {
 		else if(mbrSearchInput == 6) {
 			prompt = 1;
 			while(prompt == 1) {
+				System.out.println("");
 				System.out.println("Enter a social security number to search.");
 				mbrSearchInputString = scan.readLine();
 				for(int i = 0; i < mbrList.size(); ++i) {
