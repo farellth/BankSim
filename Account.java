@@ -30,21 +30,29 @@ public class Account implements Serializable {
 	
 	public void acctDetails() throws IOException {
 		int viewAcct = 1;
+		int prompt = 1;
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		
 		while(viewAcct == 1) {
-			System.out.println("Account Details");
-			System.out.println("Account Number:   " + acctNbr);
-			System.out.println("Account Type:     " + acctType);
-			System.out.println("Interest Rate:    " + rate + "%");
-			System.out.println("Balance:          $" + bal);
-			System.out.println("");
-			
-			// Account details menu
-			System.out.println("Enter 1 to delete this account.");
-			System.out.println("Enter 2 to return to the main member record.");
-			inputString = scan.readLine();
-			input = Integer.parseInt(inputString);
+			while(prompt == 1) {
+				System.out.println("Account Details");
+				System.out.println("Account Number:   " + acctNbr);
+				System.out.println("Account Type:     " + acctType);
+				System.out.println("Interest Rate:    " + rate + "%");
+				System.out.println("Balance:          $" + bal);
+				System.out.println("");
+				
+				// Account details menu
+				System.out.println("Enter 1 to delete this account.");
+				System.out.println("Enter 2 to return to the main member record.");
+				inputString = scan.readLine();
+				try {
+					input = Integer.parseInt(inputString);
+					prompt = 0;
+				} catch(NumberFormatException e) {
+					System.out.println("Invalid input");
+				}
+			}
 			if(input == 1) {
 				deleteAcct();
 				viewAcct = 0;
@@ -53,7 +61,7 @@ public class Account implements Serializable {
 				viewAcct = 0;
 			}
 			else {
-				System.out.println("Invalid");
+				System.out.println("Invalid choice");
 			}
 		}
 	}

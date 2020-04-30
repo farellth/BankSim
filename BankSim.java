@@ -42,14 +42,21 @@ class BankSim {
 		// End Test
 		
 		while(keepSearch == 1) {
-			
+			int prompt = 1;
+						
 			// Main menu
-			System.out.println("Enter 1 to search for an existing member.");
-			System.out.println("Enter 2 to create a new membership.");
-			System.out.println("Enter 3 to quit.");
-			inputString = scan.readLine();
-			input = Integer.parseInt(inputString);
-			
+			while(prompt == 1) {
+				System.out.println("Enter 1 to search for an existing member.");
+				System.out.println("Enter 2 to create a new membership.");
+				System.out.println("Enter 3 to quit.");
+				inputString = scan.readLine();
+				try {
+					input = Integer.parseInt(inputString);
+					prompt = 0;
+				} catch(NumberFormatException e) {
+					System.out.println("Invalid input");
+				}
+			}
 			// Member search
 			if(input == 1) {
 				System.out.println("Enter an access number to search:");
@@ -113,7 +120,7 @@ class BankSim {
 			
 			// Invalid input
 			else {
-				System.out.println("Invalid");
+				System.out.println("Invalid choice");
 			}
 		}
 		saveMembers();

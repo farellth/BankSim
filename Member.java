@@ -55,33 +55,43 @@ public class Member implements Serializable {
 		System.out.println(acctList);
 		viewMbr = 1;
 		while(viewMbr == 1) {
+			int prompt = 1;
+			
+			Account currentAcct = new Account();
 			
 			// Prints basic member info
-			System.out.println("Member Record");
-			System.out.println("Access Number:	" + accessNbr);
-			System.out.println("Name:		" + firstName + " " + lastName);
-			System.out.println("");
-			System.out.println("Account List:");
-			System.out.println("");
-			
-			// Prints member account list
-			Account currentAcct = new Account();
-			for(int i = 0; i < acctList.size(); ++i) {
-				currentAcct = (Account)acctList.get(i);
-				//if(currentAcct.rate == currentAcct.checkingRate) {
-					System.out.println(currentAcct.acctNbr + "   $" + currentAcct.bal + " " + currentAcct.rate);
-				//}
+			while(prompt == 1) {
+				System.out.println("Member Record");
+				System.out.println("Access Number:	" + accessNbr);
+				System.out.println("Name:		" + firstName + " " + lastName);
+				System.out.println("");
+				System.out.println("Account List:");
+				System.out.println("");
+				
+				// Prints member account list
+				
+				for(int i = 0; i < acctList.size(); ++i) {
+					currentAcct = (Account)acctList.get(i);
+					//if(currentAcct.rate == currentAcct.checkingRate) {
+						System.out.println(currentAcct.acctNbr + "   $" + currentAcct.bal + " ");
+					//}
+				}
+				
+				// Member menu
+				System.out.println("");
+				System.out.println("Enter 1 to view member details.");
+				System.out.println("Enter 2 to to access a specific account.");
+				System.out.println("Enter 3 to perform a transaction.");
+				System.out.println("Enter 4 to create a new account.");
+				System.out.println("Enter 5 to return to member lookup.");
+				inputString = scan.readLine();
+				try {
+					input = Integer.parseInt(inputString);
+					prompt = 0;
+				} catch(NumberFormatException e) {
+					System.out.println("Invalid input");					
+				}
 			}
-			
-			// Member menu
-			System.out.println("");
-			System.out.println("Enter 1 to view member details.");
-			System.out.println("Enter 2 to to access a specific account.");
-			System.out.println("Enter 3 to perform a transaction.");
-			System.out.println("Enter 4 to create a new account.");
-			System.out.println("Enter 5 to return to member lookup.");
-			inputString = scan.readLine();
-			input = Integer.parseInt(inputString);
 			
 			// Member details
 			if(input == 1) {
@@ -90,69 +100,118 @@ public class Member implements Serializable {
 			
 			// Account details
 			else if(input == 2) {
-				System.out.println("Select an account to view its details:");
-				for(int i = 0; i < acctList.size(); ++i) {
-					currentAcct = (Account)acctList.get(i);
-					System.out.println((i+1) + " " + currentAcct.acctNbr + "   $" + currentAcct.bal);
-				}
-				inputString = scan.readLine();
-				input = Integer.parseInt(inputString);
-				System.out.println("Debug");
-				currentAcct = (Account)acctList.get((input-1));
-				System.out.println(currentAcct.bal);
-				currentAcct.acctDetails();
-				System.out.println("Debug");
-				if(currentAcct.delAcct == 1) {
-					acctList.remove(currentAcct);
-					allAcctList.remove(currentAcct);
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Select an account to view its details:");
+					for(int i = 0; i < acctList.size(); ++i) {
+						currentAcct = (Account)acctList.get(i);
+						System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+					}
+					inputString = scan.readLine();
+					try {
+						input = Integer.parseInt(inputString);
+						System.out.println("Debug");
+						currentAcct = (Account)acctList.get((input-1));
+						System.out.println(currentAcct.bal);
+						currentAcct.acctDetails();
+						System.out.println("Debug");
+						if(currentAcct.delAcct == 1) {
+							acctList.remove(currentAcct);
+							allAcctList.remove(currentAcct);
+						}
+						prompt = 0;
+					} catch(NumberFormatException e) {
+						System.out.println("Invalid input");
+					}
 				}
 			}
 			
 			// Transactions
 			else if(input == 3) {
-				System.out.println("Enter 1 to perform a deposit.");
-				System.out.println("Enter 2 to perform a withdrawal.");
-				System.out.println("Enter 3 to perform a transfer.");
-				System.out.println("Enter 4 to cancel.");
-				inputString = scan.readLine();
-				input = Integer.parseInt(inputString);
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Enter 1 to perform a deposit.");
+					System.out.println("Enter 2 to perform a withdrawal.");
+					System.out.println("Enter 3 to perform a transfer.");
+					System.out.println("Enter 4 to cancel.");
+					inputString = scan.readLine();
+					try {
+						input = Integer.parseInt(inputString);
+						prompt = 0;
+					} catch(NumberFormatException e) {
+						System.out.println("Invalid input");
+					}
+				}
 				
 				// Deposit
 				if(input == 1) {
-					System.out.println("Select an account to add funds to:");
-					for(int i = 0; i < acctList.size(); ++i) {
-						currentAcct = (Account)acctList.get(i);
-						System.out.println((i+1) + " " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Select an account to add funds to:");
+						for(int i = 0; i < acctList.size(); ++i) {
+							currentAcct = (Account)acctList.get(i);
+							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+						}
+						inputString = scan.readLine();
+						try {
+							input = Integer.parseInt(inputString);
+							currentAcct = (Account)acctList.get((input-1));
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
 					}
-					inputString = scan.readLine();
-					input = Integer.parseInt(inputString);
-					currentAcct = (Account)acctList.get((input-1));
 					
 					// Amount to deposit
-					System.out.println("Enter an amount to add:");
-					inputString = scan.readLine();
-					amtInput = Float.parseFloat(inputString);
-					currentAcct.deposit(amtInput);
-					System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Enter an amount to add:");
+						try {
+							inputString = scan.readLine();
+							amtInput = Float.parseFloat(inputString);
+							currentAcct.deposit(amtInput);
+							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
+					}
 				}
 				
 				// Withdrawal
 				else if(input == 2) {
-					System.out.println("Select an account to remove funds from:");
-					for(int i = 0; i < acctList.size(); ++i) {
-						currentAcct = (Account)acctList.get(i);
-						System.out.println((i+1) + " " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Select an account to remove funds from:");
+						for(int i = 0; i < acctList.size(); ++i) {
+							currentAcct = (Account)acctList.get(i);
+							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+						}
+						inputString = scan.readLine();
+						try {
+							input = Integer.parseInt(inputString);
+							currentAcct = (Account)acctList.get((input-1));
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
 					}
-					inputString = scan.readLine();
-					input = Integer.parseInt(inputString);
-					currentAcct = (Account)acctList.get((input-1));
-					
+											
 					// Amount to withdrawal
-					System.out.println("Enter an amount to remove:");
-					inputString = scan.readLine();
-					amtInput = Float.parseFloat(inputString);
-					currentAcct.withdrawal(amtInput);
-					System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Enter an amount to remove:");
+						inputString = scan.readLine();
+						try {
+							amtInput = Float.parseFloat(inputString);
+							currentAcct.withdrawal(amtInput);
+							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
+						
+					}
 				}
 				
 				// Transfer
@@ -160,125 +219,181 @@ public class Member implements Serializable {
 					Account destAcct = new Account();
 					
 					// Originating account
-					System.out.println("Select an account to remove funds from:");
-					for(int i = 0; i < acctList.size(); ++i) {
-						currentAcct = (Account)acctList.get(i);
-						System.out.println((i+1) + " " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Select an account to remove funds from:");
+						for(int i = 0; i < acctList.size(); ++i) {
+							currentAcct = (Account)acctList.get(i);
+							System.out.println((i+1) + ". " + currentAcct.acctNbr + "   $" + currentAcct.bal);
+						}
+						inputString = scan.readLine();
+						try {
+							input = Integer.parseInt(inputString);
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
 					}
-					inputString = scan.readLine();
-					input = Integer.parseInt(inputString);
 					
 					// Destination account
-					currentAcct = (Account)acctList.get((input-1));
-					System.out.println("Select an account to add funds to:");
-					for(int i = 0; i < acctList.size(); ++i) {
-						destAcct = (Account)acctList.get(i);
-						System.out.println((i+1) + " " + destAcct.acctNbr + "   $" + destAcct.bal);
+					prompt = 1;
+					while(prompt == 1) {
+						currentAcct = (Account)acctList.get((input-1));
+						System.out.println("Select an account to add funds to:");
+						for(int i = 0; i < acctList.size(); ++i) {
+							destAcct = (Account)acctList.get(i);
+							System.out.println((i+1) + ". " + destAcct.acctNbr + "   $" + destAcct.bal);
+						}
+						inputString = scan.readLine();
+						try {
+							input = Integer.parseInt(inputString);
+							destAcct = (Account)acctList.get((input-1));
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
 					}
-					inputString = scan.readLine();
-					input = Integer.parseInt(inputString);
-					destAcct = (Account)acctList.get((input-1));
 					
 					// Amount to transfer
-					System.out.println("Enter an amount to transfer:");
-					inputString = scan.readLine();
-					amtInput = Float.parseFloat(inputString);
-					currentAcct.withdrawal(amtInput);
-					destAcct.deposit(amtInput);
-					System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
-					System.out.println("The new balance of account " + destAcct.acctNbr + " is $" + destAcct.bal + ".");
+					prompt = 1;
+					while(prompt == 1) {
+						System.out.println("Enter an amount to transfer:");
+						inputString = scan.readLine();
+						try {
+							amtInput = Float.parseFloat(inputString);
+							currentAcct.withdrawal(amtInput);
+							destAcct.deposit(amtInput);
+							System.out.println("The new balance of account " + currentAcct.acctNbr + " is $" + currentAcct.bal + ".");
+							System.out.println("The new balance of account " + destAcct.acctNbr + " is $" + destAcct.bal + ".");
+							prompt = 0;
+						} catch(NumberFormatException e) {
+							System.out.println("Invalid input");
+						}
+					}
 				}
 			}
 			
 			// Create new account
 			else if(input == 4) {
-				System.out.println("Create account");
-				System.out.println("Enter 1 for a savings account.");
-				System.out.println("Enter 2 for a checking account.");
-				inputString = scan.readLine();
-				input = Integer.parseInt(inputString);
-				System.out.println(input);
-				createAcct(input);
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Create account");
+					System.out.println("Enter 1 for a savings account.");
+					System.out.println("Enter 2 for a checking account.");
+					inputString = scan.readLine();
+					try {
+						input = Integer.parseInt(inputString);
+						System.out.println(input);
+						createAcct(input);
+						prompt = 0;
+					} catch(NumberFormatException e) {
+						System.out.println("Invalid input");
+					}
+				}
 			}
 			
 			// Return to main menu
 			else if(input == 5) {
-				returnToMain();				
+				returnToMain();
 			}
 			
 			// Invalid choice
 			else {
-				System.out.println("Invalid");
+				System.out.println("Invalid choice");
 			}
 		}
 	}
 	
 	// Shows detailed member info
 	public void mbrDetails() throws IOException {
+		int viewMbrDetails = 1;
+		int prompt = 1;
+		
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Member Details");
-		System.out.println("Access Number:			" + accessNbr);
-		System.out.println("Name:          			" + firstName + " " + lastName);
-		System.out.println("Date of Birth: 			" + dateOfBirth);
-		System.out.println("Phone Number:  			" + phoneNbr);
-		System.out.println("Email Address:			" + emailAddress);
-		System.out.println("Social Security Number:		" + socSecNbr);
-		System.out.println("Address:			" + street);
-		System.out.println("				" + city + "," + state);
-		System.out.println("				" + zipCode);
-		System.out.println("");
 		
-		// Member details menu
-		System.out.println("Enter 1 to modify the member's information.");
-		System.out.println("Enter 2 to delete the member record.");
-		System.out.println("Enter 3 to return the main member record.");
-		inputString = scan.readLine();
-		input = Integer.parseInt(inputString);
-		
-		// Modify info
-		//while(viewMbr == 1) {
+		while(viewMbrDetails == 1) {
+			while(prompt == 1) {
+				System.out.println("Member Details");
+				System.out.println("Access Number:			" + accessNbr);
+				System.out.println("Name:          			" + firstName + " " + lastName);
+				System.out.println("Date of Birth: 			" + dateOfBirth);
+				System.out.println("Phone Number:  			" + phoneNbr);
+				System.out.println("Email Address:			" + emailAddress);
+				System.out.println("Social Security Number:		" + socSecNbr);
+				System.out.println("Address:			" + street);
+				System.out.println("				" + city + "," + state);
+				System.out.println("				" + zipCode);
+				System.out.println("");
+				
+				// Member details menu
+				System.out.println("Enter 1 to modify the member's information.");
+				System.out.println("Enter 2 to delete the member record.");
+				System.out.println("Enter 3 to return the main member record.");
+				inputString = scan.readLine();
+				try {
+					input = Integer.parseInt(inputString);
+					prompt = 0;
+				} catch(NumberFormatException e) {
+					System.out.println("Invalid input");
+				}
+			}
+			
+			
+			// Modify info
 			if(input == 1) {
 				int retry = 1;
 				while(retry == 1) {
 					retry = modifyInfo(retry);
 				}
+				prompt = 1;
 			}
 			
 			// Delete member
 			else if(input == 2) {
 				deleteMbr();
 				if(delMbr == 1) {
+					viewMbrDetails = 0;
 					returnToMain();
+				}
+				else {
+					prompt = 1;
 				}
 				
 			// Return to main record
 			}
 			else if(input == 3) {
-				
+				viewMbrDetails = 0;
 			}
 			
 			// Invalid input
 			else {
-				System.out.println("Invalid");
+				System.out.println("Invalid choice");
 			}
-		//}
-		//viewMbr = 1;
+		}	
 	}
 	
 	// Makes changes to member info
 	public int modifyInfo(int retry) throws IOException {
+		int prompt = 1;
 		BufferedReader scan = new BufferedReader(new InputStreamReader(System.in));
 		
-		System.out.println("Select a field to modify:");
-		System.out.println("1. Name");
-		System.out.println("2. Date of Birth");
-		System.out.println("3. Phone Number");
-		System.out.println("4. Email Address");
-		System.out.println("5. Social Security Number");
-		System.out.println("6. Address");
-		System.out.println("7. Cancel modify request");
-		inputString = scan.readLine();
-		input = Integer.parseInt(inputString);
+		while(prompt == 1) {
+			System.out.println("Select a field to modify:");
+			System.out.println("1. Name");
+			System.out.println("2. Date of Birth");
+			System.out.println("3. Phone Number");
+			System.out.println("4. Email Address");
+			System.out.println("5. Social Security Number");
+			System.out.println("6. Address");
+			System.out.println("7. Cancel modify request");
+			inputString = scan.readLine();
+			try {
+				input = Integer.parseInt(inputString);
+				prompt = 0;
+			} catch(NumberFormatException e) {
+				System.out.println("Invalid input");
+			}
+		}
 		if(input == 1) {
 			System.out.println("Enter the first name:");
 			firstName = scan.readLine();
@@ -321,7 +436,7 @@ public class Member implements Serializable {
 			retry = 0;
 		}
 		else {
-			System.out.println("Invalid");
+			System.out.println("Invalid choice");
 		}
 		return retry;
 	}
@@ -331,6 +446,7 @@ public class Member implements Serializable {
 		int acctsAreEmpty = 1;
 		Account currentAcct = new Account();
 		System.out.println("Delete member record");
+		
 		// Checks all member accounts for a balance
 		for(int i = 0; i < acctList.size(); ++i) {
 			currentAcct = (Account)acctList.get(i);
