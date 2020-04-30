@@ -23,7 +23,6 @@ public class ToolKit {
 			strAccessNbr = strAccessNbr + String.valueOf(accessDigit);			
 		}
 		accessNbr = Integer.parseInt(strAccessNbr);
-		System.out.println(accessNbr);
 		return accessNbr;
 	}
 	public int generateAcctNbr() {
@@ -39,7 +38,6 @@ public class ToolKit {
 			strAcctNbr = strAcctNbr + String.valueOf(acctDigit);
 		}
 		acctNbr = Integer.parseInt(strAcctNbr);
-		System.out.println(acctNbr);
 		return acctNbr;
 	}
 }

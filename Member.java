@@ -441,15 +441,33 @@ public class Member implements Serializable {
 			retry = 0;
 		}
 		else if(input == 2) {
-			System.out.println("");
-			System.out.println("Enter the date of birth in DD/MM/YY format:");
-			dateOfBirth = scan.readLine();
+			prompt = 1;
+			while(prompt == 1) {
+				System.out.println("");
+				System.out.println("Enter the date of birth in DD/MM/YY format:");
+				dateOfBirth = scan.readLine();
+				if(dateOfBirth.matches("\\d{2}/\\d{2}/\\d{2}")) {
+					prompt = 0;
+				}
+				else {
+					System.out.println("That's not the proper format for a date of birth. Please try again.");
+				}
+			}
 			retry = 0;
 		}
 		else if(input == 3) {
-			System.out.println("");
-			System.out.println("Enter the phone number in ###-###-#### format:");
-			phoneNbr = scan.readLine();
+			prompt = 1;
+			while(prompt == 1) {
+				System.out.println("");
+				System.out.println("Enter the phone number in ###-###-#### format:");
+				phoneNbr = scan.readLine();
+				if(phoneNbr.matches("\\d{3}-\\d{3}-\\d{4}")) {
+					prompt = 0;
+				}
+				else {
+					System.out.println("That's not the proper format for a phone number. Please try again.");
+				}
+			}
 			retry = 0;
 		}
 		else if(input == 4) {
@@ -459,9 +477,18 @@ public class Member implements Serializable {
 			retry = 0;
 		}
 		else if(input == 5) {
-			System.out.println("");
-			System.out.println("Enter the social security number in ###-##-#### format:");
-			socSecNbr = scan.readLine();
+			prompt = 1;
+			while(prompt == 1) {
+				System.out.println("");
+				System.out.println("Enter the social security number in ###-##-#### format:");
+				socSecNbr = scan.readLine();
+				if(socSecNbr.matches("\\d{3}-\\d{2}-\\d{4}")) {
+					prompt = 0;
+				}
+				else {
+					System.out.println("That's not the proper format for a social security number. Please try again.");
+				}
+			}
 			retry = 0;
 		}
 		else if(input == 6) {

@@ -66,12 +66,42 @@ class BankSim {
 				currentMbr.firstName = scan.readLine();
 				System.out.println("Enter the last name:");
 				currentMbr.lastName = scan.readLine();
-				System.out.println("Enter the date of birth in DD/MM/YY format:");
-				currentMbr.dateOfBirth = scan.readLine();
-				System.out.println("Enter the social security number in ###-##-#### format:");
-				currentMbr.socSecNbr = scan.readLine();
-				System.out.println("Enter the phone number in ###-###-#### format:");
-				currentMbr.phoneNbr = scan.readLine();
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Enter the date of birth in DD/MM/YY format:");
+					currentMbr.dateOfBirth = scan.readLine();
+					// Verify DOB format
+					if(currentMbr.dateOfBirth.matches("\\d{2}/\\d{2}/\\d{2}")) {
+						prompt = 0;
+					}
+					else {
+						System.out.println("That's not the proper format for a date of birth. Please try again.");
+					}
+				}
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Enter the social security number in ###-##-#### format:");
+					currentMbr.socSecNbr = scan.readLine();
+					// Verify SSN format
+					if(currentMbr.socSecNbr.matches("\\d{3}-\\d{2}-\\d{4}")) {
+						prompt = 0;
+					}
+					else {
+						System.out.println("That's not the proper format for a social security number. Please try again.");
+					}
+				}
+				prompt = 1;
+				while(prompt == 1) {
+					System.out.println("Enter the phone number in ###-###-#### format:");
+					currentMbr.phoneNbr = scan.readLine();
+					// Verify phone number format
+					if(currentMbr.phoneNbr.matches("\\d{3}-\\d{3}-\\d{4}")) {
+						prompt = 0;
+					}
+					else {
+						System.out.println("That's not the proper format for a phone number. Please try again.");
+					}
+				}
 				System.out.println("Enter the email address:");
 				currentMbr.emailAddress = scan.readLine();
 				System.out.println("Enter the house number and street:");
@@ -144,6 +174,7 @@ class BankSim {
 						currentMbr = (Member)mbrList.get(i);
 						if(mbrSearchInput == currentMbr.accessNbr) {
 							currentMbr.mainRecord();
+							
 							//Check if member should be deleted
 							if(currentMbr.delMbr == 1) {
 								mbrList.remove(i);
@@ -189,48 +220,60 @@ class BankSim {
 			prompt = 1;
 			while(prompt == 1) {
 				System.out.println("");
-				System.out.println("Enter a date of birth to search.");
+				System.out.println("Enter a date of birth in MM/DD/YY format to search.");
 				mbrSearchInputString = scan.readLine();
-				for(int i = 0; i < mbrList.size(); ++i) {
-					Member currentMbr = new Member();
-					currentMbr = (Member)mbrList.get(i);
-					if(mbrSearchInputString.equals(currentMbr.dateOfBirth)) {
-						currentMbr.mainRecord();
-						//Check if member should be deleted
-						if(currentMbr.delMbr == 1) {
-							mbrList.remove(i);
+				// Verify DOB format
+				if(mbrSearchInputString.matches("\\d{2}/\\d{2}/\\d{2}")) {
+					for(int i = 0; i < mbrList.size(); ++i) {
+						Member currentMbr = new Member();
+						currentMbr = (Member)mbrList.get(i);
+						if(mbrSearchInputString.equals(currentMbr.dateOfBirth)) {
+							currentMbr.mainRecord();
+							//Check if member should be deleted
+							if(currentMbr.delMbr == 1) {
+								mbrList.remove(i);
+							}
+							break;
 						}
-						break;
+						else if(i == mbrList.size() - 1) {
+							System.out.println("Member not found");
+						}
 					}
-					else if(i == mbrList.size() - 1) {
-						System.out.println("Member not found");
-					}
+					prompt = 0;
 				}
-				prompt = 0;
+				else {
+					System.out.println("That's not the proper format for a date of birth. Please try again.");
+				}
 			}
 		}
 		else if(mbrSearchInput == 4) {
 			prompt = 1;
 			while(prompt == 1) {
 				System.out.println("");
-				System.out.println("Enter a phone number to search.");
+				System.out.println("Enter a phone number in ###-###-#### format to search.");
 				mbrSearchInputString = scan.readLine();
-				for(int i = 0; i < mbrList.size(); ++i) {
-					Member currentMbr = new Member();
-					currentMbr = (Member)mbrList.get(i);
-					if(mbrSearchInputString.equals(currentMbr.phoneNbr)) {
-						currentMbr.mainRecord();
-						//Check if member should be deleted
-						if(currentMbr.delMbr == 1) {
-							mbrList.remove(i);
+				// Verify phone number format
+				if(mbrSearchInputString.matches("\\d{3}-\\d{3}-\\d{4}")) {
+					for(int i = 0; i < mbrList.size(); ++i) {
+						Member currentMbr = new Member();
+						currentMbr = (Member)mbrList.get(i);
+						if(mbrSearchInputString.equals(currentMbr.phoneNbr)) {
+							currentMbr.mainRecord();
+							//Check if member should be deleted
+							if(currentMbr.delMbr == 1) {
+								mbrList.remove(i);
+							}
+							break;
 						}
-						break;
+						else if(i == mbrList.size() - 1) {
+							System.out.println("Member not found");
+						}
 					}
-					else if(i == mbrList.size() - 1) {
-						System.out.println("Member not found");
-					}
+					prompt = 0;
 				}
-				prompt = 0;
+				else {
+					System.out.println("That's not the proper format for a phone number. Please try again.");
+				}
 			}
 		}
 		else if(mbrSearchInput == 5) {
@@ -261,24 +304,30 @@ class BankSim {
 			prompt = 1;
 			while(prompt == 1) {
 				System.out.println("");
-				System.out.println("Enter a social security number to search.");
+				System.out.println("Enter a social security number in ###-##-#### format to search.");
 				mbrSearchInputString = scan.readLine();
-				for(int i = 0; i < mbrList.size(); ++i) {
-					Member currentMbr = new Member();
-					currentMbr = (Member)mbrList.get(i);
-					if(mbrSearchInputString.equals(currentMbr.socSecNbr)) {
-						currentMbr.mainRecord();
-						//Check if member should be deleted
-						if(currentMbr.delMbr == 1) {
-							mbrList.remove(i);
+				// Verify SSN format
+				if(mbrSearchInputString.matches("\\d{3}-\\d{2}-\\d{4}")) {
+					for(int i = 0; i < mbrList.size(); ++i) {
+						Member currentMbr = new Member();
+						currentMbr = (Member)mbrList.get(i);
+						if(mbrSearchInputString.equals(currentMbr.socSecNbr)) {
+							currentMbr.mainRecord();
+							//Check if member should be deleted
+							if(currentMbr.delMbr == 1) {
+								mbrList.remove(i);
+							}
+							break;
 						}
-						break;
+						else if(i == mbrList.size() - 1) {
+							System.out.println("Member not found");
+						}
 					}
-					else if(i == mbrList.size() - 1) {
-						System.out.println("Member not found");
-					}
+					prompt = 0;
 				}
-				prompt = 0;
+				else {
+					System.out.println("That's not the proper format for a social security number. Please try again.");
+				}
 			}
 		}
 		else if(mbrSearchInput == 7) {
